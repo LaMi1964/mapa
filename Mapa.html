@@ -32,13 +32,13 @@
 
         // Veřejné dlaždice Mapy.cz přes REST API v1
         L.tileLayer(
-    'https://api.mapy.cz/v1/maptiles/outdoor/{z}/{x}/{y}.png?apikey=xdEO_5ypq47OC5Z5RD2-HJSay-0Mqd5LCB2GcyiOwyI',
+    'https://api.mapy.cz/v1/maptiles/aerial/{z}/{x}/{y}.png?apikey=xdEO_5ypq47OC5Z5RD2-HJSay-0Mqd5LCB2GcyiOwyI',
     {
         attribution: '&copy; <a href="https://mapy.cz">Mapy.cz</a>',
         maxZoom: 19
     }
 ).addTo(map);
-
+        
         // Načtení GeoJSON
         fetch("pristaviste.geojson")
             .then(response => response.json())
