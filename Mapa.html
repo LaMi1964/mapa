@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Test GeoJSON – SPS</title>
+
+    <!-- Načtení Mapy.cz API -->
+    <script src="https://api.mapy.cz/loader.js"></script>
+    <script>
+        // MUSÍ být před Loader.load()
+        Loader.async = true;
+
+        // Načteme moduly mapy a markerů
+        Loader.load(null, { modules: ["map", "marker"] });
+    </script>
+
+    <style>
+        #map {
+            width: 100%;
+            height: 600px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Test načtení GeoJSON z disku</h1>
+
+    <p>Vyber soubor <strong>pristaviste.geojson</strong> z disku:</p>
+    <input type="file" id="fileInput" accept=".geojson,.json">
+
+    <div id="map"></div>
+
+    <script>
+        // Počkej, až bude API načtené
+        Loader.onready = function () {
+
+            // Inicializace mapy
+            var center = SMap.Coords.fromWGS84
