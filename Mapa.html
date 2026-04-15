@@ -30,7 +30,7 @@
         Loader.onready = function () {
 
             // Inicializace mapy
-            var center = SMap.Coords.fromWGS84(14.42076, 50.08804); // Praha
+            var center = SMap.Coords.fromWGS84(14.42076, 50.08804);
             var map = new SMap(JAK.gel("map"), center, 10);
             map.addDefaultLayer(SMap.DEF_BASE).enable();
             map.addDefaultControls();
@@ -39,10 +39,12 @@
             map.addLayer(layer);
             layer.enable();
 
-            // Automatické načtení GeoJSON z GitHub Pages
-            fetch("pristaviste.geojson")
-                .then(response => response.json())
-                .then(geojson => {
+            // Načtení GeoJSON z GitHub Pages
+            fetch("pristaviste.geojson", { cache: "no-store" })
+                .then(r => r.text())
+                .then(text => {
+                    // Ručně převedeme text na JSON (bez ohledu na MIME typ)
+                    const geojson = JSON.parse(text);
 
                     let coordsList = [];
 
@@ -58,7 +60,6 @@
                         layer.addMarker(marker);
                     });
 
-                    // Automatické přiblížení na všechny body
                     if (coordsList.length > 0) {
                         let bbox = SMap.Coords.getBox(coordsList);
                         map.setCenterZoom(bbox.getCenter(), 14);
