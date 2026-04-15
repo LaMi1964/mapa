@@ -1,0 +1,29 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [14.414, 50.095]
+      },
+      "properties": {
+        "nazev": "Přístaviště Holešovice",
+        "typ": "přístaviště",
+        "popis": "Veřejné přístaviště, délka 60 m"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [14.480, 50.050]
+      },
+      "properties": {
+        "nazev": "Vývaziště Podolí",
+        "typ": "vývaziště",
+        "popis": "Krátkodobé stání, max. 24 h"
+      }
+    }
+  ]
+}
