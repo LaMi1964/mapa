@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Test GeoJSON – SPS</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        #map {
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        // Inicializace mapy
+        const map = L.map('map').setView([49.8, 15.6], 8);
+
+        // Dlaždice Mapy.cz – základní mapa
+        L.tileLayer('https://mapserver.mapy.cz/base-m/{z}-{x}-{y}', {
+            attribution: '&copy; <a href="https://mapy.cz">Mapy.cz</a>',
+            maxZoom: 19
+        }).addTo(map);
+
+        // Načtení GeoJSON
+        fetch("pristaviste.geojson")
+            .then(response => response.json())
+            .then(data => {
+                const geoLayer = L.geoJSON(data, {
+                    onEachFeature: function (feature, layer) {
+                        if (feature.properties && feature.properties.name) {
+                            layer.bindPopup(feature.properties.name);
+                        }
+                    }
+                }).addTo(map);
+
+                // Automatické přiblížení na data
+                map.fitBounds(geoLayer.getBounds());
+            })
+            .catch(err => console.error("Chyba při načítání GeoJSON:", err));
+    </script>
+</body>
+</html>
