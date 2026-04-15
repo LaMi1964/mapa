@@ -5,10 +5,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [14.414, 50.095]
+        "coordinates": [14.4566306, 50.1049411]
       },
       "properties": {
-        "nazev": "Přístaviště Holešovice",
+        "nazev": "Pobočka Praha",
         "typ": "přístaviště",
         "popis": "Veřejné přístaviště, délka 60 m"
       }
@@ -17,10 +17,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [14.480, 50.050]
+        "coordinates": [14.4577461, 50.1079717]
       },
       "properties": {
-        "nazev": "Vývaziště Podolí",
+        "nazev": "Ředitelství SPS",
         "typ": "vývaziště",
         "popis": "Krátkodobé stání, max. 24 h"
       }
