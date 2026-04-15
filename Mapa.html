@@ -30,15 +30,12 @@
         // Inicializace mapy
         const map = L.map('map').setView([49.8, 15.6], 8);
 
-        // Veřejné dlaždice Mapy.cz přes REST API v1
-        L.tileLayer(
-    'https://api.mapy.cz/v1/maptiles/aerial/{z}/{x}/{y}.png?apikey=xdEO_5ypq47OC5Z5RD2-HJSay-0Mqd5LCB2GcyiOwyI',
-    {
-        attribution: '&copy; <a href="https://mapy.cz">Mapy.cz</a>',
-        maxZoom: 19
-    }
-).addTo(map);
-        
+        // Podkladová mapa – OpenStreetMap (funguje vždy)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors',
+            maxZoom: 19
+        }).addTo(map);
+
         // Načtení GeoJSON
         fetch("pristaviste.geojson")
             .then(response => response.json())
