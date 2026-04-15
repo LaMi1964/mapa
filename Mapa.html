@@ -4,13 +4,10 @@
     <meta charset="UTF-8">
     <title>Test GeoJSON – SPS</title>
 
-    <!-- Načtení Mapy.cz API -->
-    <script src="https://api.mapy.cz/loader.js"></script>
+    <!-- Mapy.cz API s tvým API klíčem -->
+    <script src="https://api.mapy.cz/loader.js?key=xdEO_5ypq47OC5Z5RD2-HJSay-0Mqd5LCB2GcyiOwyI"></script>
     <script>
-        // MUSÍ být před Loader.load()
         Loader.async = true;
-
-        // Načteme moduly mapy a markerů
         Loader.load(null, { modules: ["map", "marker"] });
     </script>
 
@@ -25,16 +22,53 @@
 </head>
 
 <body>
-    <h1>Test načtení GeoJSON z disku</h1>
-
-    <p>Vyber soubor <strong>pristaviste.geojson</strong> z disku:</p>
-    <input type="file" id="fileInput" accept=".geojson,.json">
+    <h1>Automatické načtení GeoJSON – SPS</h1>
 
     <div id="map"></div>
 
     <script>
-        // Počkej, až bude API načtené
         Loader.onready = function () {
 
             // Inicializace mapy
-            var center = SMap.Coords.fromWGS84
+            var center = SMap.Coords.fromWGS84(14.42076, 50.08804); // Praha
+            var map = new SMap(JAK.gel("map"), center, 10);
+            map.addDefaultLayer(SMap.DEF_BASE).enable();
+            map.addDefaultControls();
+
+            var layer = new SMap.Layer.Marker();
+            map.addLayer(layer);
+            layer.enable();
+
+            // Automatické načtení GeoJSON z GitHub Pages
+            fetch("pristaviste.geojson")
+                .then(response => response.json())
+                .then(geojson => {
+
+                    let coordsList = [];
+
+                    geojson.features.forEach(f => {
+                        let coords = f.geometry.coordinates;
+                        let c = SMap.Coords.fromWGS84(coords[0], coords[1]);
+                        coordsList.push(c);
+
+                        let marker = new SMap.Marker(c, null, {
+                            title: f.properties.nazev
+                        });
+
+                        layer.addMarker(marker);
+                    });
+
+                    // Automatické přiblížení na všechny body
+                    if (coordsList.length > 0) {
+                        let bbox = SMap.Coords.getBox(coordsList);
+                        map.setCenterZoom(bbox.getCenter(), 14);
+                    }
+                })
+                .catch(err => {
+                    console.error("Chyba při načítání GeoJSON:", err);
+                    alert("Nepodařilo se načíst GeoJSON.");
+                });
+        };
+    </script>
+</body>
+</html>
